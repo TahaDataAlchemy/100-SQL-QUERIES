@@ -1,0 +1,18 @@
+Given the following relation schema:
+
+employee(employee_name, street, city)
+
+works(employee_name, company_name, salary)
+
+company(company_name, city)
+
+manages(employee_name, manager_name)
+
+Retrieve the names, street addresses, and cities of residence for all employees who are employed by 'First Bank Corporation' and earn more than $10,000.
+
+SOLUTION
+
+select employee.employee_name, employee.street, employee.city from
+employee, works
+where employee.employee_name=works.employee_name
+ and company_name = 'First Bank Corporation' and salary > 10000
