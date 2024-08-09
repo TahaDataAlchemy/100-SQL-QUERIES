@@ -1,0 +1,25 @@
+Given the following relation schema:
+
+employee(employee_name, street, city)
+
+works(employee_name, company_name, salary)
+
+company(company_name, city)
+
+manages(employee_name, manager_name)
+
+Find the names of all employees in the database who earn more than every employee of 'Small Bank Corporation'. Assume that all people work for at most one company.
+
+
+SOLUTION
+
+with max_Salary as (select max(salary) as salary
+        from works
+        where company_name = 'Small Bank Corporation')
+
+
+
+select Distinct w1.employee_name
+from works w1
+join max_Salary ms
+on w1.salary > ms.salary
