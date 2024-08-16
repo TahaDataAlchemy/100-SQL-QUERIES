@@ -1,0 +1,14 @@
+From the following tables write a SQL query to find the salesperson(s) and the customer(s) he represents. Return Customer Name, city, Salesman, commission.
+
+
+SELECT 
+    c.cust_name AS "Customer Name",
+    c.city AS "city",
+    s.name AS "Salesman",
+    s.commission AS "commission"
+FROM 
+    customer c
+JOIN 
+    salesman s
+ON 
+    c.salesman_id = s.salesman_id;
