@@ -1,0 +1,15 @@
+From the following tables write a SQL query to locate those salespeople who do not live in the same city where their customers live and have received a commission of more than 12% from the company. Return Customer Name, customer city, Salesman, salesman city, commission.
+
+
+-- Query to select customer name, customer city, salesman name, salesman city, and commission 
+-- where salesman does not live in the same city as their customers and commission is more than 12%
+with SalesPerson as (
+    select salesman_id,name,city,commission
+    from salesman
+    where commission > 0.12
+)
+
+Select c.cust_name as customer_Name,c.city as customerCity,sp.name as SalesmenName,sp.city as SalesmenCity,sp.commission as SalesCommision 
+from customer c
+join SalesPerson sp
+on c.salesman_id = sp.salesman_id and c.city != sp.city
