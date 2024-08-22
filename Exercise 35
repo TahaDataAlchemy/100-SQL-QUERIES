@@ -1,0 +1,12 @@
+Write a SQL statement to generate a list in ascending order of salespersons who work either for one or more customers or have not yet joined any of the customers.
+
+
+select s.salesman_id,s.name as salesman_name,s.city as salesman_city
+from customer c
+right join salesman s
+ON c.salesman_id = s.salesman_id 
+GROUP BY 
+    s.salesman_id, 
+    s.name, 
+    s.city
+order by s.salesman_id ASC
