@@ -1,0 +1,12 @@
+From the following tables write a SQL query to find the order values greater than the average order value of 10th October 2012. Return ord_no, purch_amt, ord_date, customer_id, salesman_id.
+
+
+with avg_orderVal as(
+    SELECT AVG(purch_amt) as Avg_OrderValue
+    FROM Orders 
+    where ord_date = '2012-10-10'
+)
+
+SELECT  ord_no, purch_amt, ord_date, customer_id, salesman_id
+FROM Orders
+where ord_date = '2012-10-10' AND purch_amt > (select Avg_OrderValue from avg_orderVal)
