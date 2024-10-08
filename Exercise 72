@@ -1,0 +1,18 @@
+Write a solution to swap the seat id of every two consecutive students. If the number of students is odd, the id of the last student is not swapped.
+
+Return the result table ordered by id in ascending order.
+
+
+WITH CTE AS (
+    -- Assign row numbers to each student in order of their id
+    SELECT id, student, ROW_NUMBER() OVER (ORDER BY id) AS rn
+    FROM Seat
+)
+
+SELECT CASE
+            WHEN rn%2=1 AND rn+1<=(SELECT MAX(rn) from CTE) THEN id+1
+            WHEN rn%2=0 THEN id-1
+            ELSE id
+        END as id,student
+from CTE
+order by id
