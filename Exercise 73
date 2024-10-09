@@ -1,0 +1,35 @@
+Write a solution to:
+
+Find the name of the user who has rated the greatest number of movies. In case of a tie, return the lexicographically smaller user name.
+Find the movie name with the highest average rating in February 2020. In case of a tie, return the lexicographically smaller movie name.
+
+
+# Write your MySQL query statement below
+WITH greaterRating AS (
+    SELECT DISTINCT name as results
+    FROM (
+        SELECT u.name, COUNT(m.user_id) AS rating_count
+        FROM Users u
+        JOIN MovieRating m
+        ON u.user_id = m.user_id
+        GROUP BY u.name
+        ORDER BY COUNT(m.user_id) DESC, u.name ASC
+        LIMIT 1
+    ) AS subquery
+),
+
+highestAvgRating as (
+    SELECT DISTINCT movieName as results FROM (
+    SELECT m.title as movieName,AVG(mr.rating) as avgRating
+    from Movies m
+    JOIN MovieRating mr
+    on m.movie_id = mr.movie_id
+    WHERE mr.created_at BETWEEN '2020-02-01' AND '2020-02-29'
+    GROUP BY m.title
+    ORDER BY AVG(mr.rating) DESC , m.title ASC
+    limit 1
+    ) as subquery
+)
+select * from greaterRating
+union ALL 
+SELECT * FROM highestAvgRating
