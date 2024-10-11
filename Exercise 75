@@ -1,0 +1,28 @@
+Write a solution to find the people who have the most friends and the most friends number.
+
+The test cases are generated so that only one person has the most friends.
+
+
+# Write your MySQL query statement below
+with uniqueRequesterId as (
+    SELECT requester_id,count(requester_id) AS TotalCount
+    FROM RequestAccepted 
+    group by requester_id 
+    ORDER BY  count(accepter_id) DESC
+),
+uniqueaccepterId as (
+    SELECT accepter_id , count(accepter_id) AS TotalCount
+    FROM RequestAccepted 
+    group by accepter_id
+    ORDER BY  count(accepter_id) DESC
+),
+
+AllTabel as (SELECT * FROM uniqueRequesterId
+UNION ALL 
+SELECT * FROM uniqueaccepterId)
+
+SELECT requester_id as id , sum(TotalCount) AS num
+from AllTabel
+group by requester_id
+ORDER BY  sum(TotalCount) DESC
+LIMIT 1
