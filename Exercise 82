@@ -1,0 +1,18 @@
+Write a solution to find the second highest distinct salary from the Employee table. If there is no second highest salary, return null (return None in Pandas).
+
+# Write your MySQL query statement below
+With DistinctSalary as (
+    SELECT DISTINCT(salary) as disSal
+    FROM Employee
+    
+),
+RANKEDSAL AS (
+    SELECT disSal as SecondHighestSalary, RANK() OVER (ORDER BY disSal DESC) as SalaryRank
+    FROM DistinctSalary
+)
+
+SELECT COALESCE(
+           (SELECT SecondHighestSalary
+            FROM RANKEDSAL
+            WHERE SalaryRank = 2), NULL
+       ) AS SecondHighestSalary;
