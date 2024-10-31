@@ -13,6 +13,8 @@ Both quality and poor_query_percentage should be rounded to 2 decimal places.
 Return the result table in any order.
 
 
+
+
 WITH QueryStats AS (
     SELECT
         query_name,
